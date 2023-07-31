@@ -1,0 +1,12 @@
+{
+    "require": {
+        "spipu/html2pdf": "^5.2",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": ["helpers/helper.php"]
+    }
+}
