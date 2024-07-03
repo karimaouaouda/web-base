@@ -1,6 +1,7 @@
 <?php
 include __DIR__."/../vendor/autoload.php";
 
+ini_set('session.save_handler', 'files');
 
 
 
@@ -12,10 +13,9 @@ $app = new myApp($_SERVER);
     echo $info . "====> ". $val."<br>";
 }*/
 
+$s = $app->get_response();
 
-
-print_r($app->get_response());
-
+print_r($s);
 
 
 

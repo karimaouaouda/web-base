@@ -10,13 +10,18 @@ class Application{
     private static Request $request;
 
 
+    private static $singletons = [];
+
+
     public function __construct($server_array = null)
     {
         session_start();
+
         if($server_array == null){
             throw new Exception("must use sserver",505);
         }
         $request = new Request($server_array);
+
 
         self::$request = $request;
 

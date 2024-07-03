@@ -14,7 +14,23 @@ class Router{
 
     public static function get($uri , $callback){
 
-        if( !is_callable($callback) ){
+        if( !is_callable($callback) || is_array($callback) ){
+
+            if (is_array($callback)){
+                if( !class_exists($callback[0]) ){
+                    $classname = $callback[0];
+                    throw new \Exception("error : class $classname undeclared");
+                }
+
+                if (method_exists($callback[0], $callback[1])) {
+                    $func = ($callback[0])::getFuncByName($callback[1]);
+                    $route = new Route($uri, $func);
+                    self::$getMatches += [$uri => $route];
+
+                    return $route;
+                }
+                throw new \Exception("error : function $callback[1] not found in $callback[0]");
+            }
 
             $parts = explode("|" , $callback);
 
@@ -32,12 +48,12 @@ class Router{
                 return $route;
             }
             throw new \Exception("error : function $parts[1] not found in $parts[0]");
+        }else{
+            $route = new Route($uri, $callback);
+            self::$getMatches += [$uri => $route];
+
+            return $route;
         }
-
-        $route = new Route($uri , $callback);
-        self::$getMatches += [$uri => $route];
-
-        return $route;
     }
 
     public static function post($uri , $callback){

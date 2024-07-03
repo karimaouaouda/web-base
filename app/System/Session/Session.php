@@ -3,9 +3,8 @@
 namespace App\System;
 
 
+
 class Session{
-
-
     private static $session;
 
     public static function hasUser() : bool{
